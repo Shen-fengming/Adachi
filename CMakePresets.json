@@ -1,0 +1,25 @@
+{
+    "version": 8,
+    "configurePresets": [
+        {
+            "name": "opengl-debug",
+            "displayName": "OpenGL Debug MacOS",
+            "description": "Using compilers: C = /opt/homebrew/Cellar/llvm/22.1.7_1/bin/clang, CXX = /opt/homebrew/Cellar/llvm/22.1.7_1/bin/clang++",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "/opt/homebrew/Cellar/llvm/22.1.7_1/bin/clang",
+                "CMAKE_CXX_COMPILER": "/opt/homebrew/Cellar/llvm/22.1.7_1/bin/clang++",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "ADACHI_RENDERER": "OpenGL",
+                "ADACHI_ENABLE_PROFILING": true
+            }
+        }
+    ],
+    "buildPresets": [
+    {
+      "name": "opengl-debug",
+      "configurePreset": "opengl-debug"
+    }
+  ]
+}
