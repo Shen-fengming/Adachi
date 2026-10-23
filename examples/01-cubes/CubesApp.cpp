@@ -1,7 +1,7 @@
 // Entry Point: src/Adachi/Application/EntryPoint.cpp
 
 #include "Adachi/Core/Application.h"
-#include "Adachi/Core/Scene.h"
+#include "Adachi/Scene/Scene.h"
 #include "Adachi/Renderer/Framebuffer.h"
 #include "Adachi/Renderer/RenderPipeline.h"
 #include "CubesScene.h"
@@ -12,7 +12,8 @@
 class CubesApp: public Adachi::Application{
 public:
     CubesApp(const Adachi::Application::Config &config):Application(config){
-        m_Scene = std::make_unique<CubeScene>();
+
+        m_Scene = CreateScene<CubeScene>();
         m_Scene->imgui_window = m_Window.get();
         m_Scene->OnAttach();
 

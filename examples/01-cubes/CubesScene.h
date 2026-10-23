@@ -4,14 +4,15 @@
 
 #pragma once
 
-#include "Adachi/Core/Scene.h"
+#include "Adachi/Resource/ResourceManager.h"
+#include "Adachi/Scene/Scene.h"
 
 #include "Adachi/Event/Event.h"
 #include "Adachi/Renderer/RenderEnums.h"
 
 class CubeScene: public Adachi::Scene{
 public:
-    CubeScene();
+    CubeScene(Adachi::ResourceManager& resourceManager, Adachi::Window& window);
 
     void OnAttach() override;
     void OnDetach() override;

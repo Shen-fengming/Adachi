@@ -9,12 +9,14 @@
 
 namespace Adachi {
 #pragma region VertexBuffer
-OpenGLVertexBuffer::OpenGLVertexBuffer(const void* data, uint32_t size){
+OpenGLVertexBuffer::OpenGLVertexBuffer(const void* data, uint32_t size, BufferLayout bufferlayout){
     ADACHI_PROFILE_FUNCTION();
 
     GLCall(glGenBuffers(1, &m_RendererID));
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_RendererID));
     GLCall(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
+
+    m_BufferLayout = std::move(bufferlayout);
 }
 
 OpenGLVertexBuffer::~OpenGLVertexBuffer(){
@@ -40,10 +42,12 @@ void OpenGLVertexBuffer::OpenGLVertexBuffer::Unbind() const{
 #pragma endregion
 
 #pragma region IndexBuffer
-OpenGLIndexBuffer::OpenGLIndexBuffer(std::span<const std::uint16_t> indices, uint32_t count):m_Count(count) {
+OpenGLIndexBuffer::OpenGLIndexBuffer(const void* data, uint32_t count, IndexType indextype):m_Count(count), m_IndexType(indextype){
     GLCall(glGenBuffers(1, &m_RendererID));
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
-    GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(indices.size_bytes()), indices.data(), GL_STATIC_DRAW));
+
+    const std::size_t sizeInBytes = static_cast<std::size_t>(count) * GetIndexTypeSize(m_IndexType);
+    GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(sizeInBytes), data, GL_STATIC_DRAW));
 }
 
 OpenGLIndexBuffer::~OpenGLIndexBuffer(){

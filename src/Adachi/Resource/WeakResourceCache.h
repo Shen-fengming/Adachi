@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Adachi/Diagnostics/Debug.h"
 #include <cstddef>
 #include <functional>
 #include <memory>
@@ -26,14 +27,13 @@ public:
         const Key& key,
         Factory&& factory)
     {
-        static_assert(
-            std::is_invocable_r_v<
+        ADACHI_CORE_ASSERT(
+            (std::is_invocable_r_v<
                 std::shared_ptr<Resource>,
                 Factory,
                 const Key&
-            >,
-            "Factory must accept const Key& and return "
-            "std::shared_ptr<Resource>"
+            >),  
+            "Factory must accept const Key& and return std::shared_ptr<Resource>"
         );
 
         auto found = m_Resources.find(key);
@@ -80,12 +80,15 @@ public:
     {
         std::size_t removedCount = 0;
 
-        for (auto it = m_Resources.begin();
-             it != m_Resources.end();) {
-            if (it->second.expired()) {
+        for (auto it = m_Resources.begin();it != m_Resources.end();) 
+        {
+            if (it->second.expired()) 
+            {
                 it = m_Resources.erase(it);
                 ++removedCount;
-            } else {
+            } 
+            else 
+            {
                 ++it;
             }
         }

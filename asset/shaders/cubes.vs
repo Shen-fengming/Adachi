@@ -10,8 +10,6 @@ layout (std140) uniform Matrices
 };
 
 uniform mat4 u_model;
-// uniform mat4 projection;
-// uniform mat4 view;
 
 out vec4 v_color0;
 

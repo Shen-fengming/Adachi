@@ -62,7 +62,6 @@ static uint32_t ShaderDataComponentCount(ShaderUniformType type)
     }
 }
 
-
 struct BufferElement{
     std::string Name;
     ShaderUniformType Type;
@@ -83,6 +82,18 @@ class BufferLayout{
 public:
     BufferLayout(){}
     BufferLayout(std::initializer_list<BufferElement> elements):m_Elements(elements){
+        uint32_t offset = 0;
+        m_Stride = 0;
+
+        for(auto& element: m_Elements){
+            element.Offset = offset;
+            offset+=element.Stride;
+            m_Stride+=element.Stride;
+        }
+    }
+    explicit BufferLayout(std::vector<BufferElement> elements)
+        : m_Elements(std::move(elements))
+    {
         uint32_t offset = 0;
         m_Stride = 0;
 
@@ -121,9 +132,27 @@ public:
     virtual const BufferLayout& GetLayout() const = 0;
     virtual void SetLayout(BufferLayout& bufferlayout) = 0;
 
-    static std::shared_ptr<VertexBuffer> Create(const void* data, uint32_t size);
+    static std::shared_ptr<VertexBuffer> Create(const void* data, uint32_t size, BufferLayout bufferlayout);
 };
 
+enum class IndexType {
+    UInt16,
+    UInt32
+};
+
+constexpr std::size_t GetIndexTypeSize(IndexType type)
+{
+    switch (type)
+    {
+        case IndexType::UInt16:
+            return sizeof(std::uint16_t);
+
+        case IndexType::UInt32:
+            return sizeof(std::uint32_t);
+    }
+
+    return 0;
+}
 
 class IndexBuffer
 {
@@ -136,7 +165,7 @@ public:
 
     // Span enables various kind of input: vector, array, etc. as long as it is a contiguous sequence of uint32_t
     // the indices can die after the construction
-    static std::shared_ptr<IndexBuffer> Create(std::span<const std::uint16_t> indices, uint32_t count);
+    static std::shared_ptr<IndexBuffer> Create(const void* data, uint32_t count, IndexType indextype);
 };
 
 }

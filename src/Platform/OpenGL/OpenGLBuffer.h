@@ -10,7 +10,7 @@
 namespace Adachi {
 class OpenGLVertexBuffer: public VertexBuffer{
 public:
-    explicit OpenGLVertexBuffer(const void* data, uint32_t size);
+    explicit OpenGLVertexBuffer(const void* data, uint32_t size, BufferLayout bufferlayout);
     ~OpenGLVertexBuffer();
 
     void Bind() const override;
@@ -26,7 +26,7 @@ private:
 class OpenGLIndexBuffer: public IndexBuffer
 {
 public:
-    OpenGLIndexBuffer(std::span<const std::uint16_t> indices, uint32_t count);
+    OpenGLIndexBuffer(const void* data, uint32_t count, IndexType indextype);
 
     ~OpenGLIndexBuffer() override;
 
@@ -40,6 +40,7 @@ public:
 private:
     unsigned int m_RendererID = 0;
     std::uint32_t m_Count = 0;
+    IndexType m_IndexType;
 };
 
 }

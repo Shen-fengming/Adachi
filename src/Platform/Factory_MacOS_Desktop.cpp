@@ -43,14 +43,14 @@ std::unique_ptr<Renderer> Renderer::Create(const Window& window){
     return std::make_unique<OpenGLRenderer>(window);
 }
 
-std::shared_ptr<VertexBuffer> VertexBuffer::Create(const void *data, uint32_t size)
+std::shared_ptr<VertexBuffer> VertexBuffer::Create(const void *data, uint32_t size, BufferLayout bufferlayout)
 {
-    return std::make_shared<OpenGLVertexBuffer>(data, size);
+    return std::make_shared<OpenGLVertexBuffer>(data, size, std::move(bufferlayout));
 }
 
-std::shared_ptr<IndexBuffer> IndexBuffer::Create(std::span<const std::uint16_t> indices, uint32_t count)
+std::shared_ptr<IndexBuffer> IndexBuffer::Create(const void* data, uint32_t count, IndexType indextype)
 {
-    return std::make_shared<OpenGLIndexBuffer>(indices, count);
+    return std::make_shared<OpenGLIndexBuffer>(data, count, indextype);
 }
 
 std::shared_ptr<VertexArray> VertexArray::Create()
@@ -58,9 +58,9 @@ std::shared_ptr<VertexArray> VertexArray::Create()
     return std::make_shared<OpenGLVertexArray>();
 }
 
-std::shared_ptr<Shader> Shader::Create(const std::string &name, const std::string &vertexSrc, const std::string &fragmentSrc)
+std::shared_ptr<Shader> Shader::Create(const char* vertexShaderCode, const char* fragmentShaderCode)
 {
-    return std::make_shared<OpenGLShader>(vertexSrc, fragmentSrc, name);
+    return std::make_shared<OpenGLShader>(vertexShaderCode, fragmentShaderCode);
 }
 
 std::shared_ptr<Framebuffer> Framebuffer::CreateDefault()

@@ -4,6 +4,7 @@
 #include "Adachi/Renderer/GraphicsAPI.h"
 #include "Adachi/Diagnostics/Profiler.h"
 #include "Adachi/Event/Event.h"
+#include "Adachi/Resource/ResourceManager.h"
 #include "Window.h"
 
 #include <GLFW/glfw3.h>
@@ -25,7 +26,9 @@ Application::Application(const Config &config) : m_Config(config) {
   );
   m_Renderer = Renderer::Create(*m_Window);
   m_Renderer->Init();
-  m_Pipeline = std::make_unique<Adachi::RenderPipeline>();
+  m_Pipeline = std::make_unique<RenderPipeline>();
+
+  m_ResourceManager = std::make_unique<ResourceManager>(ResourceManager::Config{std::filesystem::path{ADACHI_PROJECT_ROOT} / "asset"});
 }
 
 void Application::Run() {

@@ -14,7 +14,7 @@ namespace Adachi{
 
 class OpenGLShader: public Shader{
 public:
-    OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc, const std::string& name = "Unnamed Shader");
+	OpenGLShader(const char* vertexShaderCode, const char* fragmentShaderCode);
     ~OpenGLShader();
 
     void Bind() const override;
@@ -35,8 +35,6 @@ public:
 		}
 	}
 
-	const std::string& GetName() const override { return m_Name; }
-
 	static void PrintCurrentShader();
 	static void PrintUniformBlocks(GLint program);
 	static void PrintShaderUniform(GLuint program, const char* name);
@@ -47,7 +45,6 @@ private:
 	friend OpenGLRenderer;
 	void SetUniform(const GLint location, const UniformValue& value);
 private:
-    std::string m_Name;
     uint32_t m_RendererID;
 
 	//Cache

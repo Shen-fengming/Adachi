@@ -7,6 +7,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+set(
+    ADACHI_PLATFORM 
+    "MacOS_Desktop" 
+    CACHE STRING
+    "Run platform"
+)
+set_property(
+    CACHE ADACHI_PLATFORM
+    PROPERTY STRINGS MacOS_Desktop
+)
+
 # glad
 add_library(glad STATIC
     vendor/glad/src/gl.c
@@ -56,7 +67,7 @@ if(ADACHI_PLATFORM STREQUAL "MacOS_Desktop")
     )
 
     find_package(OpenGL REQUIRED)
-    find_package(glfw3 CONFIG REQUIRED)
+    #find_package(glfw3 CONFIG REQUIRED)
 
     target_link_libraries(imgui
         PUBLIC
@@ -73,6 +84,34 @@ else()
     )
 endif()
 
+#Assimp
+include(FetchContent)
+
+# Assimp configuration must be set before MakeAvailable().
+set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_SAMPLES OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_ASSIMP_TOOLS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_INSTALL OFF CACHE BOOL "" FORCE)
+set(ASSIMP_WARNINGS_AS_ERRORS OFF CACHE BOOL "" FORCE)
+
+set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT OFF CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_OBJ_IMPORTER ON CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_FBX_IMPORTER ON CACHE BOOL "" FORCE)
+set(ASSIMP_BUILD_GLTF_IMPORTER ON CACHE BOOL "" FORCE)
+
+# Enable this if Adachi only imports models and never exports them.
+set(ASSIMP_NO_EXPORT ON CACHE BOOL "" FORCE)
+
+FetchContent_Declare(
+    assimp
+    GIT_REPOSITORY https://github.com/assimp/assimp.git
+    GIT_TAG v6.0.5
+    GIT_SHALLOW TRUE
+)
+
+FetchContent_MakeAvailable(assimp)
+
 # Adachi
 add_library(Adachi STATIC)
 
@@ -83,11 +122,16 @@ target_compile_definitions(Adachi PUBLIC
 )
 
 # Backend-independent engine code
-target_sources(Adachi PUBLIC
+target_sources(Adachi PRIVATE
     src/Adachi/Core/EntryPoint.cpp
     src/Adachi/Core/Application.cpp
     src/Adachi/Diagnostics/Log.cpp
-    src/Adachi/Util/ResourceManager.cpp
+    src/Adachi/Resource/ResourceManager.cpp
+    src/Adachi/Resource/ResourceLoader.cpp
+    src/Adachi/Renderer/RenderPipeline.cpp
+    src/Adachi/Renderer/Material.cpp
+    src/Adachi/Scene/Scene.cpp
+    src/Adachi/Scene/Entity.cpp
 )
 target_include_directories(Adachi PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -107,15 +151,6 @@ else()
     )
 endif()
 
-set(ADACHI_PLATFORM "MacOS_Desktop" CACHE STRING
-    "Run platform"
-)
-
-set_property(
-    CACHE ADACHI_PLATFORM
-    PROPERTY STRINGS MacOS_Desktop
-)
-
 if(ADACHI_PLATFORM STREQUAL "MacOS_Desktop")
     target_sources(Adachi PRIVATE
 
@@ -126,16 +161,19 @@ if(ADACHI_PLATFORM STREQUAL "MacOS_Desktop")
         src/Platform/OpenGL/OpenGLVertexArray.cpp
         src/Platform/OpenGL/OpenGLShader.cpp
         src/Platform/GLFW/GLFWCreatedWindow.cpp
-
         src/Platform/Factory_MacOS_Desktop.cpp
     )
 
-    target_link_libraries(Adachi PUBLIC
+    target_link_libraries(Adachi 
+    PUBLIC
         glad
         glfw
         spdlog::spdlog
         glm
         imgui
+
+    PRIVATE
+        assimp::assimp
     )
 
 else()
@@ -149,6 +187,14 @@ add_executable(CubesApp
     examples/01-cubes/CubesScene.cpp
 )
 target_link_libraries(CubesApp PRIVATE
+    Adachi
+)
+
+add_executable(ModelLoaderApp
+    examples/02-modelloader/ModelLoaderApp.cpp
+    examples/02-modelloader/ModelLoaderScene.cpp
+)
+target_link_libraries(ModelLoaderApp PRIVATE
     Adachi
 )
 

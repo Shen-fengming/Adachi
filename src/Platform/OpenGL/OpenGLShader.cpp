@@ -5,31 +5,15 @@
 
 #include "OpenGLShader.h"
 #include "Adachi/Diagnostics/Debug.h"
+#include "Adachi/Diagnostics/Log.h"
 #include "Adachi/Diagnostics/Profiler.h"
 #include "Adachi/Renderer/UniformValue.h"
-#include "Adachi/Util/ResourceManager.h"
 #include "Platform/OpenGL/OpenGLDebug.h"
 
 namespace Adachi{
 
-OpenGLShader::OpenGLShader(const std::string& vertexPath, const std::string& fragmentPath, const std::string& name):m_Name(name)
+OpenGLShader::OpenGLShader(const char* vertexShaderCode, const char* fragmentShaderCode)
 {
-    ADACHI_PROFILE_FUNCTION();
-
-    const std::filesystem::path shaderDirectory =
-        std::filesystem::path(ADACHI_PROJECT_ROOT) /
-        "asset" /
-        "shaders";
-
-    const std::filesystem::path resolvedVertexPath = shaderDirectory / vertexPath;
-    const std::filesystem::path resolvedFragmentPath = shaderDirectory / fragmentPath;
-
-    const std::string vertexSource = ResourceManager::ReadFile(resolvedVertexPath);
-    const std::string fragmentSource = ResourceManager::ReadFile(resolvedFragmentPath);
-
-    const char* vertexShaderCode = vertexSource.c_str();
-    const char* fragmentShaderCode = fragmentSource.c_str();
-
     CompileShader(vertexShaderCode, fragmentShaderCode);
 }
 
@@ -139,6 +123,7 @@ void OpenGLShader::SetUniform(
 }
 void OpenGLShader::CompileShader(const char* vertexShaderCode, const char* fragmentShaderCode)
 {
+    //ADACHI_CORE_INFO("Shader code: {}", "Hi");
     unsigned int vertexShader{}, fragmentShader{};
 
     int success{};
@@ -151,7 +136,7 @@ void OpenGLShader::CompileShader(const char* vertexShaderCode, const char* fragm
     if (!success) {
       glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
     }
-    ADACHI_CORE_ASSERT(success, "Vertex shader of {} creation failed: {}", m_Name, infoLog);
+    ADACHI_CORE_ASSERT(success, "Vertex shader creation failed: {}", infoLog);
 
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
     GLCall(glShaderSource(fragmentShader, 1, &fragmentShaderCode, NULL));
@@ -159,9 +144,9 @@ void OpenGLShader::CompileShader(const char* vertexShaderCode, const char* fragm
     GLCall(glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success));
     if (!success) {
       glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-      throw std::runtime_error(infoLog);
+      //throw std::runtime_error(infoLog);
     }
-    ADACHI_CORE_ASSERT(success, "Fragment shader of {} creation failed: {}", m_Name, infoLog);
+    ADACHI_CORE_ASSERT(success, "Fragment shader of creation failed: {}", infoLog);
 
     m_RendererID = glCreateProgram();
     GLCall(glAttachShader(m_RendererID, vertexShader));
@@ -171,7 +156,7 @@ void OpenGLShader::CompileShader(const char* vertexShaderCode, const char* fragm
     if (!success) {
       glGetProgramInfoLog(m_RendererID, 512, NULL, infoLog);
     }
-    ADACHI_CORE_ASSERT(success, "Shader linking of {} creation failed: {}", m_Name, infoLog);
+    ADACHI_CORE_ASSERT(success, "Shader linking failed: {}", infoLog);
 
     GLCall(glDeleteShader(vertexShader));
     GLCall(glDeleteShader(fragmentShader));

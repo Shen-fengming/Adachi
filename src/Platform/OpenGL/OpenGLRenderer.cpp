@@ -180,7 +180,7 @@ void OpenGLRenderer::SetShaderUniform(Shader& shader, const std::string& name, c
 
     if(cachedUniform!=cachedShader.end() && cachedUniform->second.second==uniformValue)
     {
-        ADACHI_CORE_INFO("Shader unform value unchanged");
+        //ADACHI_CORE_INFO("Shader uniform value unchanged");
         return;
     }
 
@@ -342,7 +342,7 @@ void OpenGLRenderer::SetColorMask(const ColorSetting& setting)
     glColorMask(value[0], value[1], value[2], value[3]);
     m_StateCache.colorMask = value;
 
-    ADACHI_CORE_INFO("New color mask set in renderer: {},{},{},{}", setting.red, setting.green, setting.blue, setting.alpha);
+    //ADACHI_CORE_INFO("New color mask set in renderer: {},{},{},{}", setting.red, setting.green, setting.blue, setting.alpha);
 }
 
 void OpenGLRenderer::ApplyFramebufferPreparation(const RenderPassDesc& description)
