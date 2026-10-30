@@ -150,6 +150,10 @@ CubeScene::CubeScene(Adachi::ResourceManager& resourceManager, Adachi::Window& w
 			true,
 			true
 		},
+		{
+            false,
+            0.5
+        },
 		m_Shader, 
 		{
 			{"u_model", Adachi::ShaderUniformType::Mat4},
@@ -199,6 +203,10 @@ CubeScene::CubeScene(Adachi::ResourceManager& resourceManager, Adachi::Window& w
 			true,
 			true
 		},
+		{
+            false,
+            0.5
+        },
 		m_Shader, 
 		{
 			{"u_model", Adachi::ShaderUniformType::Mat4},
@@ -246,6 +254,10 @@ CubeScene::CubeScene(Adachi::ResourceManager& resourceManager, Adachi::Window& w
 			true,
 			true
 		},
+		{
+            false,
+            0.5
+        },
 		m_Shader, 
 		{
 			{"u_model", Adachi::ShaderUniformType::Mat4},
@@ -293,6 +305,10 @@ CubeScene::CubeScene(Adachi::ResourceManager& resourceManager, Adachi::Window& w
 			true,
 			true
 		},
+		{
+            false,
+            0.5
+        },
 		m_Shader, 
 		{
 			{"u_model", Adachi::ShaderUniformType::Mat4},
@@ -340,6 +356,10 @@ CubeScene::CubeScene(Adachi::ResourceManager& resourceManager, Adachi::Window& w
 			true,
 			true
 		},
+		{
+            false,
+            0.5
+        },
 		m_Shader, 
 		{
 			{"u_model", Adachi::ShaderUniformType::Mat4},

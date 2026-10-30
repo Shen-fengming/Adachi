@@ -14,7 +14,6 @@ public:
     CubesApp(const Adachi::Application::Config &config):Application(config){
 
         m_Scene = CreateScene<CubeScene>();
-        m_Scene->imgui_window = m_Window.get();
         m_Scene->OnAttach();
 
         std::shared_ptr<Adachi::Framebuffer> m_Framebuffer;
@@ -27,7 +26,7 @@ public:
                 {"view",		Adachi::UniformBufferDataType::Mat4}
             }
         );
-        std::unique_ptr<Adachi::UniformBuffer> m_Uniformbuffer_view = Adachi::UniformBuffer::CreateUniformBuffer(UniformbufferLayout, 0);
+        std::unique_ptr<Adachi::UniformBuffer> m_Uniformbuffer_view = Adachi::UniformBuffer::Create(UniformbufferLayout, 0);
 
         m_Pipeline->AddUniformBuffer("Matrices", std::move(m_Uniformbuffer_view));
 

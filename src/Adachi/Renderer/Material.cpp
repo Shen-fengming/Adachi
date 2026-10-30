@@ -8,9 +8,11 @@ void Material::AddShader(
     PrimitiveTopology topology,
     DepthSetting depthsetting,
     ColorSetting colorsetting,
+    AlphaSetting alphasetting,
     std::shared_ptr<Shader> shader,
     std::unordered_map<std::string, ShaderUniformType> uniformtypes,
-    std::unordered_map<std::string, UniformValue> uniformvalues
+    std::unordered_map<std::string, UniformValue> uniformvalues,
+    std::unordered_map<std::string, std::shared_ptr<Texture>> textures
 )
 {
     auto [iterator, inserted] = m_TechniqueShaderMap.try_emplace(
@@ -19,9 +21,11 @@ void Material::AddShader(
             std::move(shader),
             std::move(uniformtypes),
             std::move(uniformvalues),
+            std::move(textures),
             topology,
             depthsetting,
-            colorsetting
+            colorsetting,
+            alphasetting
         }
     );
 
@@ -55,7 +59,7 @@ const PrimitiveTopology& Material::GetCurrentTopology(PassRenderTechnique techni
 
 void Material::SetUniformValue(PassRenderTechnique technique, const std::string& uniformName, const UniformValue& uniformValue)
 {
-    auto typeBuffer = GetCurrentPassDesc(technique).UniformTypes;
+    auto typeBuffer = GetCurrentPassDesc(technique).ShaderUniformTypes;
     auto typeIt = typeBuffer.find(uniformName);
 
     if (typeIt == typeBuffer.end())
@@ -84,7 +88,7 @@ void Material::SetUniformValue(PassRenderTechnique technique, const std::string&
         uniformValue
     );
 
-    auto& valueBuffer = GetCurrentPassDesc(technique).Values;
+    auto& valueBuffer = GetCurrentPassDesc(technique).ShaderUniformValues;
     PrintUniform("new material color", "u_Color", uniformValue);
     valueBuffer.insert_or_assign(uniformName, uniformValue);
 }

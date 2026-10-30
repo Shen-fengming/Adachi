@@ -73,7 +73,7 @@ private:
     float m_Fovy =      glm::radians(45.0f);
     float m_Aspect =    800.0f / 600.0f;
     float m_ZNear =     0.1f;
-    float m_ZFar =      100.0f;
+    float m_ZFar =      200.0f;
 
     glm::mat4 m_View;
     glm::mat4 m_Projection;

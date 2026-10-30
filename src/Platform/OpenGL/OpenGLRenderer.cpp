@@ -20,11 +20,13 @@
 #include "Adachi/Renderer/Renderer.h"
 #include "OpenGLRenderer.h"
 #include "Adachi/Renderer/VertexArray.h"
+
 #include "OpenGLDebug.h"
-#include "Platform/OpenGL/OpenGLFramebuffer.h"
-#include "Platform/OpenGL/OpenGLShader.h"
-#include "Platform/OpenGL/OpenGLUniformbuffer.h"
-#include "Platform/OpenGL/OpenGLVertexArray.h"
+#include "OpenGLFramebuffer.h"
+#include "OpenGLShader.h"
+#include "OpenGLUniformbuffer.h"
+#include "OpenGLVertexArray.h"
+#include "OpenGLTexture.h"
 
 
 namespace Adachi {
@@ -159,8 +161,6 @@ void OpenGLRenderer::BindShader(Shader& shader)
     auto& openGLShader = static_cast<OpenGLShader&>(shader);
     const GLuint shaderID = openGLShader.GetID();
 
-    auto& cachedShader = m_StateCache.shaders[shaderID];
-
     if (!m_StateCache.bindedShaderID || m_StateCache.bindedShaderID != shaderID)
     {
         GLCall(glUseProgram(shaderID));
@@ -175,10 +175,10 @@ void OpenGLRenderer::SetShaderUniform(Shader& shader, const std::string& name, c
     const GLuint shaderID = openGLShader.GetID();
     const GLint uniformID = openGLShader.GetUniformID(name);
 
-    auto& cachedShader = m_StateCache.shaders[shaderID];
-    auto cachedUniform = cachedShader.find(name);
+    auto& cachedUniforms = m_StateCache.shadersWithUniforms[shaderID];
+    auto cachedUniform = cachedUniforms.find(name);
 
-    if(cachedUniform!=cachedShader.end() && cachedUniform->second.second==uniformValue)
+    if(cachedUniform!=cachedUniforms.end() && cachedUniform->second.second==uniformValue)
     {
         //ADACHI_CORE_INFO("Shader uniform value unchanged");
         return;
@@ -190,7 +190,7 @@ void OpenGLRenderer::SetShaderUniform(Shader& shader, const std::string& name, c
         m_StateCache.bindedShaderID = shaderID;
     }
 
-    if(cachedUniform!=cachedShader.end())
+    if(cachedUniform!=cachedUniforms.end())
     {
         //PrintUniform("Cached", name, cachedUniform->second.second);
         openGLShader.SetUniform(cachedUniform->second.first, uniformValue);
@@ -203,7 +203,85 @@ void OpenGLRenderer::SetShaderUniform(Shader& shader, const std::string& name, c
         ADACHI_CORE_ASSERT(uniformLocation>=0, "Cannot find location of uniform named {}", name);
         openGLShader.SetUniform(uniformLocation, uniformValue);
 
-        cachedShader.insert_or_assign(name, std::make_pair(uniformLocation, uniformValue));
+        cachedUniforms.insert_or_assign(name, std::make_pair(uniformLocation, uniformValue));
+    }
+}
+
+void OpenGLRenderer::SetShaderTexture(Shader& shader, const std::string& name, Texture& texture)
+{
+    auto& openGLShader = static_cast<OpenGLShader&>(shader);
+    auto shaderID = openGLShader.GetID();
+    auto& cachedShaderUniforms = m_StateCache.shadersWithUniforms[shaderID];
+    auto cachedUniformIt = cachedShaderUniforms.find(name);
+
+    auto& openGLTexture = static_cast<OpenGLTexture&>(texture);
+    auto targetTextureID = openGLTexture.GetID();
+    auto targetTextureUnit = openGLTexture.GetTextureUnit();
+    auto bindedTextureIt = m_StateCache.bindedTexturesID.find(targetTextureUnit);
+
+    if (bindedTextureIt==m_StateCache.bindedTexturesID.end()              // Target unit hasn't been binded
+        || bindedTextureIt->second != targetTextureID)                    // Target texture is not binded to target unit
+    {
+        openGLTexture.Bind();
+        m_StateCache.bindedTexturesID[targetTextureUnit] = targetTextureID;
+    }
+
+    if (cachedUniformIt == cachedShaderUniforms.end())                   // Target shader's uniform hasn't been set to a texture unit
+    {
+        if (m_StateCache.bindedUniformBufferID != shaderID)
+        {
+            GLCall(glUseProgram(shaderID));
+            m_StateCache.bindedShaderID = shaderID;
+        }
+
+        auto uniformLocation = glGetUniformLocation(shaderID, name.c_str());
+
+        GLint program = 0;
+        glGetIntegerv(GL_CURRENT_PROGRAM, &program);
+
+        if (program != 0)
+        {
+            GLint uniformCount = 0;
+            GLint maxNameLength = 0;
+
+            glGetProgramiv(program, GL_ACTIVE_UNIFORMS, &uniformCount);
+            glGetProgramiv(program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxNameLength);
+
+            std::vector<GLchar> name(maxNameLength);
+
+            for (GLint i = 0; i < uniformCount; ++i)
+            {
+                GLsizei nameLength = 0;
+                GLint arraySize = 0;
+                GLenum type = 0;
+
+                glGetActiveUniform(
+                    program,
+                    static_cast<GLuint>(i),
+                    maxNameLength,
+                    &nameLength,
+                    &arraySize,
+                    &type,
+                    name.data()
+                );
+
+                const GLint location =
+                    glGetUniformLocation(program, name.data());
+
+                std::cout
+                    << "Uniform: " << name.data()
+                    << " | location: " << location
+                    << " | array size: " << arraySize
+                    << " | type: " << type
+                    << '\n';
+            }
+        }
+        
+        ADACHI_CORE_INFO("Setting new uniform cache of shader {} at location: {}", shaderID, uniformLocation);
+        ADACHI_CORE_ASSERT(uniformLocation>=0, "Cannot find location of uniform named {}", name);
+        openGLShader.SetUniform(uniformLocation, targetTextureUnit);
+
+        cachedShaderUniforms.insert_or_assign(name, std::make_pair(uniformLocation, targetTextureUnit));
     }
 }
 

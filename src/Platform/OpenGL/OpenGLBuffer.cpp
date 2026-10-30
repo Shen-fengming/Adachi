@@ -59,7 +59,7 @@ OpenGLIndexBuffer::~OpenGLIndexBuffer(){
 void OpenGLIndexBuffer::Bind() const{
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID));
 
-    ADACHI_CORE_INFO("IBO {} Binded", m_RendererID);
+    //ADACHI_CORE_INFO("IBO {} Binded", m_RendererID);
 }
 
 void OpenGLIndexBuffer::UnBind() const{

@@ -51,7 +51,7 @@ void OpenGLVertexArray::Bind() const
 
     glBindVertexArray(m_RendererID);
 
-    ADACHI_CORE_INFO("VAO {} Binded", m_RendererID);
+    //ADACHI_CORE_INFO("VAO {} Binded", m_RendererID);
 }
 
 void OpenGLVertexArray::Unbind() const

@@ -160,6 +160,7 @@ if(ADACHI_PLATFORM STREQUAL "MacOS_Desktop")
         src/Platform/OpenGL/OpenGLDebug.cpp
         src/Platform/OpenGL/OpenGLVertexArray.cpp
         src/Platform/OpenGL/OpenGLShader.cpp
+        src/Platform/OpenGL/OpenGLTexture.cpp
         src/Platform/GLFW/GLFWCreatedWindow.cpp
         src/Platform/Factory_MacOS_Desktop.cpp
     )
@@ -171,9 +172,11 @@ if(ADACHI_PLATFORM STREQUAL "MacOS_Desktop")
         spdlog::spdlog
         glm
         imgui
+        assimp::assimp
 
     PRIVATE
-        assimp::assimp
+        
+        stb
     )
 
 else()
@@ -195,6 +198,14 @@ add_executable(ModelLoaderApp
     examples/02-modelloader/ModelLoaderScene.cpp
 )
 target_link_libraries(ModelLoaderApp PRIVATE
+    Adachi
+)
+
+add_executable(GrassApp
+    examples/03-grass/GrassApp.cpp
+    examples/03-grass/GrassScene.cpp
+)
+target_link_libraries(GrassApp PRIVATE
     Adachi
 )
 

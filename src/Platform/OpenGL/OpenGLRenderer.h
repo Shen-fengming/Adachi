@@ -25,6 +25,7 @@ public:
     std::optional<GLuint> bindedShaderID;
     std::optional<GLuint> bindedVertexArrayID;
     std::optional<GLuint> bindedIndexBufferID;
+    std::unordered_map<GLuint, GLuint> bindedTexturesID;    // <texture unit, texture id>
 
     std::optional<GLenum> topology;
 
@@ -35,10 +36,12 @@ public:
     std::optional<std::array<GLboolean, 4>> colorMask;
 
     std::unordered_map<GLuint, std::unordered_map<uint32_t, UniformValue>> uniformBuffers;
-    std::unordered_map<GLuint, std::unordered_map<std::string, std::pair<GLint, UniformValue>>> shaders;
+
+    // <shader_ID, <uniform_name, <uniform_location, uniform_value>>>
+    // for textures, uniform_value is the texture unit
+    std::unordered_map<GLuint, std::unordered_map<std::string, std::pair<GLint, UniformValue>>> shadersWithUniforms;
 
     std::optional<MaterialForCurrentPass>  materialDesc;
-    
 };
 
 class OpenGLRenderer: public Renderer{
@@ -58,17 +61,20 @@ public:
     void SetupForImGUI() override;
 private:
     friend class RenderEncoder;
+
+    void BindShader(Shader& shader) override;
     
     void SetUniformBuffer(UniformBuffer& uniformBuffer, const std::string& name, const UniformValue& uniformValue) override;
-    void BindShader(Shader& shader) override;
     void SetShaderUniform(Shader& shader, const std::string& name, const UniformValue& uniformValue) override;
-    void Draw(VertexArray& vertexArray, IndexBuffer& indexBuffer) override;
+    void SetShaderTexture(Shader& shader, const std::string& name, Texture& texture) override;
+    
     void SetTopology(PrimitiveTopology topology) override;
     void SetDepthBuffer(const DepthSetting& depthSetup) override;
     void SetColorMask(const ColorSetting& setting) override;
 
+    void Draw(VertexArray& vertexArray, IndexBuffer& indexBuffer) override;
+
     void ApplyFramebufferPreparation(const RenderPassDesc& description);
-    
     
     void PrintCurrentBinding();
     void PrintCurrentViewport();

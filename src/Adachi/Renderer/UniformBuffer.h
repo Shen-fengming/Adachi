@@ -135,7 +135,7 @@ public:
         return nullptr;
     }
 
-    static std::unique_ptr<UniformBuffer> CreateUniformBuffer(UniformBufferLayout& layout, uint32_t bindingPoint);
+    static std::unique_ptr<UniformBuffer> Create(UniformBufferLayout& layout, uint32_t bindingPoint);
 
 protected:
     UniformBufferLayout m_Layout;

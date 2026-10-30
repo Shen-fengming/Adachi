@@ -4,13 +4,17 @@
 #include <string>
 #include <filesystem>
 
+#include <assimp/matrix4x4.h>
+
 class aiScene;
 class aiNode;
 class aiMesh;
 
 namespace Adachi {
 
+#pragma region Model
 class BufferLayout;
+class ImageData;
 
 enum class ModelPart : std::uint32_t {
     None       = 0,
@@ -63,17 +67,19 @@ struct ModelLoadOutput{
 
     std::vector<ModelOutputForMesh> ForMeshes;
 };
+#pragma endregion
 
 class ResourceLoader
 {
 public:
     std::string LoadString(const std::filesystem::path& path);
     ModelLoadOutput LoadModel(const std::filesystem::path& path, const ModelPart& modelPart);
+    ImageData LoadTexture(const std::filesystem::path& path);
 
 private:
     void DumpNode(const aiScene& scene, const aiNode& node, std::ostream& output, std::size_t depth);
     void DumpScene(const aiScene& scene, std::ostream& output);
-    ModelOutputForMesh ProcessMesh(const aiMesh& mesh);
+    ModelOutputForMesh ProcessMesh(const aiMesh& mesh, const aiMatrix4x4& transform);
 };
 
 }

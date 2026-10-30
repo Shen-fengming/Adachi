@@ -29,6 +29,10 @@
 #include "Adachi/Renderer/UniformBuffer.h"
 #include "Platform/OpenGL/OpenGLUniformbuffer.h"
 
+// Texture
+#include "Adachi/Renderer/Texture.h"
+#include "Platform/OpenGL/OpenGLTexture.h"
+
 #include <cstdint>
 #include <memory>
 
@@ -68,9 +72,14 @@ std::shared_ptr<Framebuffer> Framebuffer::CreateDefault()
     return std::make_shared<OpenGLFramebuffer>(true);
 }
 
-std::unique_ptr<UniformBuffer> UniformBuffer::CreateUniformBuffer(UniformBufferLayout &layout, uint32_t bindingPoint)
+std::unique_ptr<UniformBuffer> UniformBuffer::Create(UniformBufferLayout &layout, uint32_t bindingPoint)
 {
     return std::make_unique<OpenGLUniformbuffer>(layout, bindingPoint);
+}
+
+std::shared_ptr<Texture> Texture::Create(ImageData& data, TextureSemantic semanic, TextureDesc desc)
+{
+    return std::make_shared<OpenGLTexture>(data, semanic, desc);
 }
 
 }

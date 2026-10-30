@@ -1,5 +1,4 @@
 #include "ModelLoaderScene.h"
-#include "Adachi/Diagnostics/Log.h"
 #include "Adachi/Renderer/Buffer.h"
 #include "Adachi/Renderer/RenderEnums.h"
 #include "Adachi/Renderer/UniformValue.h"
@@ -30,11 +29,15 @@ ModelLoaderScene::ModelLoaderScene(Adachi::ResourceManager& resourceManager, Ada
 			true,
 			true
 		},
+		{
+            false,
+            0.5
+        },
 		m_Shader_Bunny, 
 		{
 			{"u_Model", Adachi::ShaderUniformType::Mat4},
 			{"u_Color", Adachi::ShaderUniformType::Float3}
-			//color
+			//texture
 		},
 		{
 			{"u_Color", m_BunnyColor}

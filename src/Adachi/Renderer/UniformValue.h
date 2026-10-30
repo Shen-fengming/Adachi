@@ -13,9 +13,8 @@
 
 #include "Adachi/Diagnostics/Log.h"
 
-
-
 namespace Adachi {
+
 
 using UniformValue = std::variant<
     int,
@@ -25,8 +24,9 @@ using UniformValue = std::variant<
     glm::vec3,
     glm::vec4,
     glm::mat3,
-    glm::mat4
-    //Ref<Texture2D>
+    glm::mat4,
+    //TextureSemantic
+    unsigned int
 >;
 
 template<
@@ -79,6 +79,10 @@ static void PrintUniform(
             using ValueType = std::remove_cvref_t<T>;
 
             if constexpr (std::is_same_v<ValueType, int>)
+            {
+                return std::to_string(value);
+            }
+            else if constexpr (std::is_same_v<ValueType, unsigned int>)
             {
                 return std::to_string(value);
             }

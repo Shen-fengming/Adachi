@@ -8,6 +8,7 @@
 #include "Buffer.h"
 #include "UniformValue.h"
 #include "Shader.h"
+#include "Texture.h"
 
 
 namespace Adachi{
@@ -15,11 +16,14 @@ namespace Adachi{
 struct MaterialDescCurrentPass
 {
     std::shared_ptr<Shader> Shader;
-    std::unordered_map<std::string, ShaderUniformType> UniformTypes;
-    std::unordered_map<std::string, UniformValue> Values;
+    std::unordered_map<std::string, ShaderUniformType> ShaderUniformTypes;
+    std::unordered_map<std::string, UniformValue> ShaderUniformValues;
+    std::unordered_map<std::string, std::shared_ptr<Texture>> Textures;
+
     PrimitiveTopology Topology;
     DepthSetting DepthSetup;
     ColorSetting ColorSetting;
+    AlphaSetting AlphaSetting;
 };
 
 class Material{
@@ -31,9 +35,11 @@ public:
         PrimitiveTopology topology,
         DepthSetting depthsetting,
         ColorSetting colorsetting,
+        AlphaSetting alphasetting,
         std::shared_ptr<Shader> shader,
         std::unordered_map<std::string, ShaderUniformType> uniformtypes,
-        std::unordered_map<std::string, UniformValue> uniformvalues = {}
+        std::unordered_map<std::string, UniformValue> uniformvalues = {},
+        std::unordered_map<std::string, std::shared_ptr<Texture>> textures = {}
     );
 
     bool HasTechnique(PassRenderTechnique technique) const noexcept;

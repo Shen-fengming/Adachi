@@ -24,4 +24,9 @@ struct ColorSetting
     bool alpha;
 };
 
+struct AlphaSetting
+{
+    bool alphaClipping = false;
+    float alphaCutoff = 0.5f;
+};
 }

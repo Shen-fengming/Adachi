@@ -40,23 +40,6 @@ public:
   const glm::mat4 GetViewMat() const{return m_Camera.GetViewMatrix();}
   const glm::mat4 GetProjectionMat() const{return m_Camera.GetProjectionMatrix();}
 
-  // auto GetRenderables() const {
-  //   return m_Entities | 
-  //   std::views::filter([](const auto &entity) 
-  //   {
-  //     return entity && entity->GetRenderable();
-  //   }) 
-  //   |
-  //   std::views::transform([](const auto &entity) 
-  //   {
-  //     const auto &renderable = *entity->GetRenderable();
-
-  //     //ADACHI_CORE_INFO("entity's transform: {},{},{}", entity->GetPosition().x,entity->GetPosition().y,entity->GetPosition().z);
-  //     return RenderItem{.Renderable = renderable,
-  //                       .Transform = entity->GetTransform() * renderable.GetTransform()};
-  //   });
-  // }
-
   auto GetRenderables() const
   {
     return m_Entities
@@ -78,9 +61,6 @@ public:
   }
 
   std::weak_ptr<Entity> GetEntity(const std::string& name) const;
-
-public:
-  Window* imgui_window;
 protected:
   Camera& GetCamera(){return m_Camera;}
 

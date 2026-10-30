@@ -37,8 +37,6 @@ void OpenGLShader::Unbind() const
     glUseProgram(0);
 }
 
-
-
 void OpenGLShader::SetUniform(
     GLint location,
     const UniformValue& value)
@@ -121,6 +119,7 @@ void OpenGLShader::SetUniform(
             glm::value_ptr(*matrix));
     }
 }
+
 void OpenGLShader::CompileShader(const char* vertexShaderCode, const char* fragmentShaderCode)
 {
     //ADACHI_CORE_INFO("Shader code: {}", "Hi");

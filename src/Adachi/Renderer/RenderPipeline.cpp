@@ -47,7 +47,7 @@ void RenderEncoder::SetUniformBuffer(const std::string& bufferName, const std::s
 void RenderEncoder::SetShaderUniform(const Renderable& renderable, const std::string& uniformName, const UniformValue& uniformValue)
 {
     auto& shader = renderable.GetMaterial().GetShader(m_Technique);
-    auto& typeBuffer = renderable.GetMaterial().GetCurrentPassDesc(m_Technique).UniformTypes;
+    auto& typeBuffer = renderable.GetMaterial().GetCurrentPassDesc(m_Technique).ShaderUniformTypes;
     auto typeIt = typeBuffer.find(uniformName);
 
     if (typeIt == typeBuffer.end())
@@ -83,23 +83,25 @@ void RenderEncoder::BindMaterialOf(const Renderable& renderable)
     auto& desc = renderable.GetMaterial().GetCurrentPassDesc(m_Technique);
 
     auto& shader = *desc.Shader;
-    auto& values = desc.Values;
+    auto& values = desc.ShaderUniformValues;
+    auto& textures = desc.Textures;
     auto& topology = desc.Topology;
     auto& depthsetup = desc.DepthSetup;
     auto& colorsetup = desc.ColorSetting;
 
     m_Renderer.SetTopology(topology);
-
     m_Renderer.SetDepthBuffer(depthsetup);
-
     m_Renderer.SetColorMask(colorsetup);
-
     m_Renderer.BindShader(shader);
+
+    for(auto& [name, texture]: textures)
+    {
+        m_Renderer.SetShaderTexture(shader, name, *texture);
+    }
 
     for(const auto&[name, value]: values)
     {
-        //ADACHI_CORE_INFO("Setting shader's uniform using material data:");
-        PrintUniform("pipeline data", name, value);
+        //PrintUniform("pipeline data", name, value);
         m_Renderer.SetShaderUniform(shader, name, value);
     }
 }

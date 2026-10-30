@@ -5,13 +5,10 @@
 #include "ModelLoaderScene.h"
 #include <memory>
 
-
-
 class ModelLoaderApp: public Adachi::Application{
 public:
     ModelLoaderApp(const Adachi::Application::Config &config):Application(config){
         m_Scene = CreateScene<ModelLoaderScene>();
-        m_Scene->imgui_window = m_Window.get();
         m_Scene->OnAttach();
 
         std::shared_ptr<Adachi::Framebuffer> m_Framebuffer = Adachi::Framebuffer::CreateDefault();
@@ -23,7 +20,7 @@ public:
                 {"view",		Adachi::UniformBufferDataType::Mat4}
             }
         );
-        std::unique_ptr<Adachi::UniformBuffer> m_Uniformbuffer_view_0 = Adachi::UniformBuffer::CreateUniformBuffer(UniformbufferLayout_0, 0);
+        std::unique_ptr<Adachi::UniformBuffer> m_Uniformbuffer_view_0 = Adachi::UniformBuffer::Create(UniformbufferLayout_0, 0);
         m_Pipeline->AddUniformBuffer("Matrices", std::move(m_Uniformbuffer_view_0));
 
         auto UniformbufferLayout_1 = Adachi::UniformBufferLayout
@@ -33,7 +30,7 @@ public:
                 {"u_LightDirection",		Adachi::UniformBufferDataType::Float3}
             }
         );
-        std::unique_ptr<Adachi::UniformBuffer> m_Uniformbuffer_view_1 = Adachi::UniformBuffer::CreateUniformBuffer(UniformbufferLayout_1, 1);
+        std::unique_ptr<Adachi::UniformBuffer> m_Uniformbuffer_view_1 = Adachi::UniformBuffer::Create(UniformbufferLayout_1, 1);
         m_Pipeline->AddUniformBuffer("Light", std::move(m_Uniformbuffer_view_1));
 
         Adachi::RenderPass renderPass {

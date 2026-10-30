@@ -1,84 +1,84 @@
-[23:21:27] [info] APP: Working directory: examples/01-cubes
-[23:21:27] [info] APP: ADACHI_ENABLE_PROFILING: 1
-[23:21:27] [info] ADACHI: Creating window 01-Cubes: 900 * 1600
-[23:21:27] [info] ADACHI: Framebuffer: width: 2940, height 1610
-[23:21:27] [info] ADACHI: OpenGL Info:
-[23:21:27] [info] ADACHI:   Vendor: Apple
-[23:21:27] [info] ADACHI:   Renderer: Apple M2
-[23:21:27] [info] ADACHI:   Version: 4.1 Metal - 90.5
-[23:21:27] [info] ADACHI: Resize: height: 1610, width: 2940
-[23:21:27] [info] ADACHI: VAO 1 Binded
-[23:21:27] [info] ADACHI: VBO 1 Binded
-[23:21:27] [info] ADACHI: Adding new element of vertex buffer layout:
-[23:21:27] [info] ADACHI:   Total Stride: 28
-[23:21:27] [info] ADACHI:   Size: 3
-[23:21:27] [info] ADACHI:   Offset: 0
-[23:21:27] [info] ADACHI:   VertexBufferIndex: 0
-[23:21:27] [info] ADACHI: Adding new element of vertex buffer layout:
-[23:21:27] [info] ADACHI:   Total Stride: 28
-[23:21:27] [info] ADACHI:   Size: 4
-[23:21:27] [info] ADACHI:   Offset: 12
-[23:21:27] [info] ADACHI:   VertexBufferIndex: 1
-[23:21:27] [info] ADACHI: VAO 2 Binded
-[23:21:27] [info] ADACHI: VBO 1 Binded
-[23:21:27] [info] ADACHI: Adding new element of vertex buffer layout:
-[23:21:27] [info] ADACHI:   Total Stride: 28
-[23:21:27] [info] ADACHI:   Size: 3
-[23:21:27] [info] ADACHI:   Offset: 0
-[23:21:27] [info] ADACHI:   VertexBufferIndex: 0
-[23:21:27] [info] ADACHI: Adding new element of vertex buffer layout:
-[23:21:27] [info] ADACHI:   Total Stride: 28
-[23:21:27] [info] ADACHI:   Size: 4
-[23:21:27] [info] ADACHI:   Offset: 12
-[23:21:27] [info] ADACHI:   VertexBufferIndex: 1
-[23:21:27] [info] ADACHI: VAO 3 Binded
-[23:21:27] [info] ADACHI: VBO 1 Binded
-[23:21:27] [info] ADACHI: Adding new element of vertex buffer layout:
-[23:21:27] [info] ADACHI:   Total Stride: 28
-[23:21:27] [info] ADACHI:   Size: 3
-[23:21:27] [info] ADACHI:   Offset: 0
-[23:21:27] [info] ADACHI:   VertexBufferIndex: 0
-[23:21:27] [info] ADACHI: Adding new element of vertex buffer layout:
-[23:21:27] [info] ADACHI:   Total Stride: 28
-[23:21:27] [info] ADACHI:   Size: 4
-[23:21:27] [info] ADACHI:   Offset: 12
-[23:21:27] [info] ADACHI:   VertexBufferIndex: 1
-[23:21:27] [info] ADACHI: VAO 4 Binded
-[23:21:27] [info] ADACHI: VBO 1 Binded
-[23:21:27] [info] ADACHI: Adding new element of vertex buffer layout:
-[23:21:27] [info] ADACHI:   Total Stride: 28
-[23:21:27] [info] ADACHI:   Size: 3
-[23:21:27] [info] ADACHI:   Offset: 0
-[23:21:27] [info] ADACHI:   VertexBufferIndex: 0
-[23:21:27] [info] ADACHI: Adding new element of vertex buffer layout:
-[23:21:27] [info] ADACHI:   Total Stride: 28
-[23:21:27] [info] ADACHI:   Size: 4
-[23:21:27] [info] ADACHI:   Offset: 12
-[23:21:27] [info] ADACHI:   VertexBufferIndex: 1
-[23:21:27] [info] ADACHI: VAO 5 Binded
-[23:21:27] [info] ADACHI: VBO 1 Binded
-[23:21:27] [info] ADACHI: Adding new element of vertex buffer layout:
-[23:21:27] [info] ADACHI:   Total Stride: 28
-[23:21:27] [info] ADACHI:   Size: 3
-[23:21:27] [info] ADACHI:   Offset: 0
-[23:21:27] [info] ADACHI:   VertexBufferIndex: 0
-[23:21:27] [info] ADACHI: Adding new element of vertex buffer layout:
-[23:21:27] [info] ADACHI:   Total Stride: 28
-[23:21:27] [info] ADACHI:   Size: 4
-[23:21:27] [info] ADACHI:   Offset: 12
-[23:21:27] [info] ADACHI:   VertexBufferIndex: 1
-[23:21:27] [info] ADACHI: WindowCache: width:2940,height:1610
-[23:21:27] [info] ADACHI: Viewport: x:0,y:0,width:1,height:1
-[23:21:27] [info] ADACHI: Viewport: x:0,y:0,width:2940,height:1610
-[23:21:27] [info] ADACHI: Topology changed to 0
-[23:21:27] [info] ADACHI: Shader 3 Binded
-[23:21:27] [info] ADACHI: Setting new uniform cache of location: 0
-[23:21:27] [info] ADACHI: VAO 1 Binded
-[23:21:27] [info] ADACHI: IBO 2 Binded
-[23:21:40] [info] ADACHI: Window close event processed
-[23:21:40] [info] ADACHI: Index Buffer destructed
-[23:21:40] [info] ADACHI: Index Buffer destructed
-[23:21:40] [info] ADACHI: Index Buffer destructed
-[23:21:40] [info] ADACHI: Index Buffer destructed
-[23:21:40] [info] ADACHI: Index Buffer destructed
-[23:21:40] [info] ADACHI: Vertex Buffer destructed
+[23:57:14] [info] APP: Working directory: examples/01-cubes
+[23:57:14] [info] APP: ADACHI_ENABLE_PROFILING: 1
+[23:57:14] [info] ADACHI: Creating window 01-Cubes: 900 * 1600
+[23:57:14] [info] ADACHI: Framebuffer: width: 2940, height 1610
+[23:57:14] [info] ADACHI: OpenGL Info:
+[23:57:14] [info] ADACHI:   Vendor: Apple
+[23:57:14] [info] ADACHI:   Renderer: Apple M2
+[23:57:14] [info] ADACHI:   Version: 4.1 Metal - 90.5
+[23:57:14] [info] ADACHI: Resize: height: 1610, width: 2940
+[23:57:14] [info] ADACHI: VAO 1 Binded
+[23:57:14] [info] ADACHI: VBO 1 Binded
+[23:57:14] [info] ADACHI: Adding new element of vertex buffer layout:
+[23:57:14] [info] ADACHI:   Total Stride: 28
+[23:57:14] [info] ADACHI:   Size: 3
+[23:57:14] [info] ADACHI:   Offset: 0
+[23:57:14] [info] ADACHI:   VertexBufferIndex: 0
+[23:57:14] [info] ADACHI: Adding new element of vertex buffer layout:
+[23:57:14] [info] ADACHI:   Total Stride: 28
+[23:57:14] [info] ADACHI:   Size: 4
+[23:57:14] [info] ADACHI:   Offset: 12
+[23:57:14] [info] ADACHI:   VertexBufferIndex: 1
+[23:57:14] [info] ADACHI: VAO 2 Binded
+[23:57:14] [info] ADACHI: VBO 1 Binded
+[23:57:14] [info] ADACHI: Adding new element of vertex buffer layout:
+[23:57:14] [info] ADACHI:   Total Stride: 28
+[23:57:14] [info] ADACHI:   Size: 3
+[23:57:14] [info] ADACHI:   Offset: 0
+[23:57:14] [info] ADACHI:   VertexBufferIndex: 0
+[23:57:14] [info] ADACHI: Adding new element of vertex buffer layout:
+[23:57:14] [info] ADACHI:   Total Stride: 28
+[23:57:14] [info] ADACHI:   Size: 4
+[23:57:14] [info] ADACHI:   Offset: 12
+[23:57:14] [info] ADACHI:   VertexBufferIndex: 1
+[23:57:14] [info] ADACHI: VAO 3 Binded
+[23:57:14] [info] ADACHI: VBO 1 Binded
+[23:57:14] [info] ADACHI: Adding new element of vertex buffer layout:
+[23:57:14] [info] ADACHI:   Total Stride: 28
+[23:57:14] [info] ADACHI:   Size: 3
+[23:57:14] [info] ADACHI:   Offset: 0
+[23:57:14] [info] ADACHI:   VertexBufferIndex: 0
+[23:57:14] [info] ADACHI: Adding new element of vertex buffer layout:
+[23:57:14] [info] ADACHI:   Total Stride: 28
+[23:57:14] [info] ADACHI:   Size: 4
+[23:57:14] [info] ADACHI:   Offset: 12
+[23:57:14] [info] ADACHI:   VertexBufferIndex: 1
+[23:57:14] [info] ADACHI: VAO 4 Binded
+[23:57:14] [info] ADACHI: VBO 1 Binded
+[23:57:14] [info] ADACHI: Adding new element of vertex buffer layout:
+[23:57:14] [info] ADACHI:   Total Stride: 28
+[23:57:14] [info] ADACHI:   Size: 3
+[23:57:14] [info] ADACHI:   Offset: 0
+[23:57:14] [info] ADACHI:   VertexBufferIndex: 0
+[23:57:14] [info] ADACHI: Adding new element of vertex buffer layout:
+[23:57:14] [info] ADACHI:   Total Stride: 28
+[23:57:14] [info] ADACHI:   Size: 4
+[23:57:14] [info] ADACHI:   Offset: 12
+[23:57:14] [info] ADACHI:   VertexBufferIndex: 1
+[23:57:14] [info] ADACHI: VAO 5 Binded
+[23:57:14] [info] ADACHI: VBO 1 Binded
+[23:57:14] [info] ADACHI: Adding new element of vertex buffer layout:
+[23:57:14] [info] ADACHI:   Total Stride: 28
+[23:57:14] [info] ADACHI:   Size: 3
+[23:57:14] [info] ADACHI:   Offset: 0
+[23:57:14] [info] ADACHI:   VertexBufferIndex: 0
+[23:57:14] [info] ADACHI: Adding new element of vertex buffer layout:
+[23:57:14] [info] ADACHI:   Total Stride: 28
+[23:57:14] [info] ADACHI:   Size: 4
+[23:57:14] [info] ADACHI:   Offset: 12
+[23:57:14] [info] ADACHI:   VertexBufferIndex: 1
+[23:57:14] [info] ADACHI: WindowCache: width:2940,height:1610
+[23:57:14] [info] ADACHI: Viewport: x:0,y:0,width:1,height:1
+[23:57:14] [info] ADACHI: Viewport: x:0,y:0,width:2940,height:1610
+[23:57:14] [info] ADACHI: Topology changed to 0
+[23:57:14] [info] ADACHI: Shader 3 Binded
+[23:57:14] [info] ADACHI: Setting new uniform cache of location: 0
+[23:57:14] [info] ADACHI: VAO 1 Binded
+[23:57:14] [info] ADACHI: IBO 2 Binded
+[23:57:23] [info] ADACHI: Window close event processed
+[23:57:23] [info] ADACHI: Index Buffer destructed
+[23:57:23] [info] ADACHI: Index Buffer destructed
+[23:57:23] [info] ADACHI: Index Buffer destructed
+[23:57:23] [info] ADACHI: Index Buffer destructed
+[23:57:23] [info] ADACHI: Index Buffer destructed
+[23:57:23] [info] ADACHI: Vertex Buffer destructed

@@ -18,6 +18,7 @@
 namespace Adachi{
 
 class RenderEncoder;
+class Texture;
 
 // The current buffer's relative position& size in the entire window
 // turn 0.0-1.0 to 0-10000
@@ -97,9 +98,12 @@ protected:
 
 protected:// the protected api that get exposed to RenderEncoder
     virtual void SetUniformBuffer(UniformBuffer& uniformBuffer, const std::string& name, const UniformValue& uniformValue) = 0;
+    // SetTexture(Texture)
 
-    virtual void BindShader(Shader& shader)=0;
+    virtual void BindShader(Shader& shader) = 0;
+
     virtual void SetShaderUniform(Shader& shader, const std::string& name, const UniformValue& uniformValue) = 0;
+    virtual void SetShaderTexture(Shader& shader, const std::string& name, Texture& texture) = 0;
     
     virtual void SetTopology(PrimitiveTopology topology) = 0;
     virtual void SetDepthBuffer(const DepthSetting& depthSetup) = 0;

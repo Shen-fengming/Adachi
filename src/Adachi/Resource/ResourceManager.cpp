@@ -4,8 +4,10 @@
 #include "Adachi/Renderer/Buffer.h"
 #include "Adachi/Renderer/Mesh.h"
 #include "Adachi/Renderer/Shader.h"
+#include "Adachi/Renderer/Texture.h"
 #include "Adachi/Renderer/VertexArray.h"
 #include "Adachi/Resource/ResourceLoader.h"
+#include <memory>
 #include <utility>
 
 namespace Adachi {
@@ -72,6 +74,20 @@ ModelFetchResult ResourceManager::FetchFromModel(const std::string& modelPath, c
     }
 
     return result;
+}
+
+std::shared_ptr<Texture> ResourceManager::FetchTexture(const std::string& texturePath, TextureSemantic semanic, TextureDesc desc)
+{
+    return m_TextureCache.GetOrCreate(
+        texturePath, 
+        [&](const std::string& key)
+        {
+            auto resolvedTexturePath = m_ResourcePath / "textures" / key;
+            auto loadResult = m_ResourceLoader.LoadTexture(resolvedTexturePath);
+
+            return Texture::Create(loadResult, semanic, desc);
+        }
+    );
 }
 
 } // namespace Adachi
